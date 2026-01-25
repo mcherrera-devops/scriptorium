@@ -1,6 +1,7 @@
 ---
 title: Crea un podcast en HTML
 description: Aprende a integrar contenido multimedia, incorporando sonidos en una página web.
+svg: draws/podcast-html.svg
 ---
 
 ```md

@@ -1,7 +1,7 @@
 ---
 title: Ecommerce con Grid
 description: Demuestra tu dominio de Grid creando un layout para un ecommerce totalmente responsivo.
-svg: draws/podcast-html.svg
+svg: draws/ecommerce.svg
 ---
 
 ```md
