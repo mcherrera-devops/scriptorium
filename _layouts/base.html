@@ -31,6 +31,12 @@
     box-shadow:
       1px 1px 0 #222;
   }
+
+  @media (max-width: 600px) {
+    .sketch-btn {
+      margin-left: 15px;
+    }
+  }
 </style>
 
 <body class="layout-base">
@@ -38,9 +44,15 @@
   <main class="container">
     <div class="hero text-center">
     </div><!-- end hero -->
-    <button class="sketch-btn" onclick="netlifyIdentity.open()">
+    <button class="sketch-btn" onclick="netlifyIdentity.open()" id="login-btn">
       Iniciar sesión
     </button>
+    <button class="sketch-btn" id="logout-btn" style="display:none;">
+      Cerrar sesión
+    </button>
+
+    <p id="welcome-msg" style="display:none; margin-top:1rem;"></p>
+
     {% include menu.html %}
     <div class="content">
       {{ content }}
@@ -51,9 +63,60 @@
   {% endif %}
   {% include footer.html %}
   <script src="{{ '/assets/js/clipboard.js' | relative_url }}?v={{ site.github.build_revision }}"></script>
-  <script src="{{ '/assets/js/clearfix.js' | relative_url }}?v={{ site.github.build_revision }}""></script>
-  <script src=" {{ '/assets/js/codepen.js' | relative_url }}?v={{ site.github.build_revision }}""></script>
+  <script src="{{ '/assets/js/clearfix.js' | relative_url }}?v={{ site.github.build_revision }}"></script>
+  <script src=" {{ '/assets/js/codepen.js' | relative_url }}?v={{ site.github.build_revision }}"></script>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const loginBtn = document.getElementById("login-btn");
+      const logoutBtn = document.getElementById("logout-btn");
+      const welcomeMsg = document.getElementById("welcome-msg");
+
+      if (!window.netlifyIdentity) {
+        console.error("Netlify Identity no cargó");
+        return;
+      }
+
+      netlifyIdentity.on("init", user => {
+        updateUI(user);
+      });
+
+      netlifyIdentity.on("login", user => {
+        updateUI(user);
+        netlifyIdentity.close();
+      });
+
+      netlifyIdentity.on("logout", () => {
+        updateUI(null);
+      });
+
+      loginBtn.addEventListener("click", () => {
+        netlifyIdentity.open();
+      });
+
+      logoutBtn.addEventListener("click", () => {
+        netlifyIdentity.logout();
+      });
+
+      function updateUI(user) {
+        if (user) {
+          loginBtn.style.display = "none";
+          logoutBtn.style.display = "inline-block";
+          welcomeMsg.style.display = "block";
+          welcomeMsg.textContent =
+            `Bienvenido, ${user.user_metadata.full_name || user.email}`;
+        } else {
+          loginBtn.style.display = "inline-block";
+          logoutBtn.style.display = "none";
+          welcomeMsg.style.display = "none";
+          welcomeMsg.textContent = "";
+        }
+      }
+    });
+  </script>
+
+
 </body>
 
 </html>
