@@ -82,3 +82,59 @@ main {
     padding: 0 1.5rem;
   }
 }
+
+.container-solution {
+  margin: 2rem 0;
+
+  /* efecto borde dibujado */
+  box-shadow:
+    2px 2px 0 #ccc,
+    -2px 2px 0 #ddd,
+    2px -2px 0 #ccc;
+  /* color base del papel */
+  background:
+    linear-gradient(#fffdf5, #f7f0c6);
+  transform: rotate(-0.2deg);
+  p, h2 {
+    padding: 0 1rem;
+  }
+}
+
+/* botón */
+.container-solution summary {
+  cursor: pointer;
+  padding: 0.9rem 1.2rem;
+  font-weight: 700;
+  font-family: "Comic Neue", "Patrick Hand", cursive, system-ui;
+  background: repeating-linear-gradient(
+    0deg,
+    #fffdf5,
+    #fffdf5 24px,
+    #f3e8c8 25px
+  );
+  list-style: none;
+  user-select: none;
+}
+
+/* quitar flecha default */
+.container-solution summary::-webkit-details-marker {
+  display: none;
+}
+
+/* icono tipo sketch */
+.container-solution summary::before {
+  content: "+";
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* cuando se abre */
+.container-solution[open] summary::before {
+  content: "−";
+}
+
+/* separador cuando abre */
+.container-solution[open] summary {
+  border-bottom: 2px dashed #222;
+}
