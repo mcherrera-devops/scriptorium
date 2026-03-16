@@ -72,6 +72,7 @@
       const loginBtn = document.getElementById("login-btn");
       const logoutBtn = document.getElementById("logout-btn");
       const welcomeMsg = document.getElementById("welcome-msg");
+      const commentBlock = document.getElementById("private-content");
 
       if (!window.netlifyIdentity) {
         console.error("Netlify Identity no cargó");
@@ -110,11 +111,14 @@
           welcomeMsg.style.display = "block";
           welcomeMsg.textContent =
             `Bienvenido, ${user.user_metadata.full_name || user.email}`;
+          commentBlock.style.display = "block";
+
         } else {
           loginBtn.style.display = "inline-block";
           logoutBtn.style.display = "none";
           welcomeMsg.style.display = "none";
           welcomeMsg.textContent = "";
+          commentBlock.style.display = "none";
         }
       }
     });
